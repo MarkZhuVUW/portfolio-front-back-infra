@@ -7,6 +7,10 @@ async function connect() {
   // const password = Config.get('application.mongo.password');
   // const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
 
+  console.log(
+    // eslint-disable-next-line no-undef
+    `mongodb://devroot:devroot@${process.env.ME_CONFIG_MONGODB_SERVER}:27017/`
+  );
   // FIXME: specify the database name
   await mongoose.connect(
     // eslint-disable-next-line no-undef
