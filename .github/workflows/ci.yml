@@ -63,8 +63,8 @@ jobs:
       - name: Enable backend service and test
         working-directory: "./backend"
         run: |
-          (npm run start&)
-          sleep 30
+          npm run start&
+          npx wait-on http://localhost:3000/api/api-docs --timeout 60000
           npm run test:e2e
   # Playwright end-to-end test
   chrome-e2e-test:
@@ -95,8 +95,9 @@ jobs:
         working-directory: "./scripts"
         run: |
           chmod +x start-ci.sh
-          (./start-ci.sh &)
-          sleep 80
+          ./start-ci.sh &
+          npx wait-on http://localhost:5000/ --timeout 60000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 60000
       - name: Run Playwright E2E tests
         working-directory: "./e2eTests"
         run: npm run test:e2e
