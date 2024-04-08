@@ -91,9 +91,8 @@ jobs:
         run: |
           chmod +x start-ci.sh
           (./start-ci.sh)&
-          sleep(120)
-          # npm install -g wait-on
-          # npx wait-on http://localhost:5000/ --timeout 60000
+          npm install -g wait-on
+          npx wait-on http://localhost:5000/ --timeout 60000
           # npx wait-on http://localhost:3000/api/health --timeout 60000
       - name: Run Playwright E2E tests
         working-directory: "./e2eTests"
