@@ -1,30 +1,11 @@
 version: "3"
 
 services:
-  cs732-careless-crayfish:
-    image: zdy120939259/cs732-careless-crayfish:latest
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-      - 5000:5000
-    depends_on:
-      - mongodb
-      - mongo-express
-    networks:
-      - MONGO
-    links:
-      - "mongodb"
-      - "mongo-express"
-    # TODO update this when we deploy to aws
-    # volumes:
-    #   - ~/.aws/credentials:/root/.aws/credentials:ro
-  mongodb:
+  mongo:
     image: mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=devroot
-      - MONGO_INITDB_ROOT_PASSWORD=devroot
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=cs732
     ports:
       - "27017:27017"
@@ -40,22 +21,20 @@ services:
   mongo-express:
     image: mongo-express
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_SERVER=mongodb
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
       - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=devroot
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=devroot
-      - ME_CONFIG_BASICAUTH_USERNAME=dev
-      - ME_CONFIG_BASICAUTH_PASSWORD=dev
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=${MONGO_ROOT_USER}
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
     depends_on:
-      - mongodb
+      - mongo
     ports:
       - "8080:8081"
     networks:
       - MONGO
-    links:
-      - "mongodb"
   wiremock:
     image: rodolpheche/wiremock
     ports:
@@ -66,6 +45,7 @@ services:
 networks:
   MONGO:
     name: MONGO
+
 volumes:
   MONGO_DATA:
     name: MONGO_DATA

@@ -88,7 +88,7 @@ jobs:
       # Note that we are assuming the start.sh script spins up everything within 120s
       - name: Start servers
         env:
-          ME_CONFIG_MONGODB_SERVER: mongo
+          ME_CONFIG_MONGODB_SERVER: mongodb
           ME_CONFIG_MONGODB_PORT: 27017
           ME_CONFIG_MONGODB_ENABLE_ADMIN: false
           ME_CONFIG_MONGODB_AUTH_DATABASE: admin
@@ -104,8 +104,8 @@ jobs:
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on
-          npx wait-on http://localhost:5000/ --timeout 9999999
-          npx wait-on http://localhost:3000/api/api-docs --timeout 9999999
+          npx wait-on http://localhost:5000/ --timeout 10000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 10000
       - name: Run Playwright E2E tests
         env:
           REACT_APP_URL: http://localhost:5000
