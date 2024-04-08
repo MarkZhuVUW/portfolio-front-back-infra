@@ -34,11 +34,6 @@ jobs:
         image: mongo
         ports:
           - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: devroot
-          MONGO_INITDB_ROOT_PASSWORD: devroot
-          ME_CONFIG_MONGODB_SERVER: localhost
-
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -63,7 +58,7 @@ jobs:
         run: |
           npm run start&
           npm install -g wait-on
-          npx wait-on http://localhost:3000/api/api-docs --timeout 60000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 10000
           npm run test:e2e
   # Playwright end-to-end test
   chrome-e2e-test:
@@ -80,30 +75,24 @@ jobs:
           node-version: "20.11.1" # latest LTS at the time this is written.
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Set up environment variables into .env
+      - name: Set up playwright environment variables into .env
         working-directory: "./e2eTests"
         run: |
           echo "REACT_APP_URL=http://localhost:5000" >> .env
+          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
           echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
       - name: build playwright
         working-directory: "./e2eTests"
         run: |
           npm ci
+      - name: Set up node server environment variables into .env
+        working-directory: "./backend"
+        run: |
+          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
+
       # Run the start.sh script to spin up servers
       # Note that we are assuming the start.sh script spins up everything within 120s
       - name: Start servers
-        env:
-          ME_CONFIG_MONGODB_SERVER: mongo
-          ME_CONFIG_MONGODB_PORT: 27017
-          ME_CONFIG_MONGODB_ENABLE_ADMIN: false
-          ME_CONFIG_MONGODB_AUTH_DATABASE: admin
-          ME_CONFIG_MONGODB_AUTH_USERNAME: devroot
-          ME_CONFIG_MONGODB_AUTH_PASSWORD: devroot
-          ME_CONFIG_BASICAUTH_USERNAME: dev
-          ME_CONFIG_BASICAUTH_PASSWORD: dev
-          MONGO_INITDB_ROOT_USERNAME: devroot
-          MONGO_INITDB_ROOT_PASSWORD: devroot
-          MONGO_INITDB_DATABASE: cs732
         working-directory: "./scripts"
         run: |
           chmod +x start-ci.sh
