@@ -92,7 +92,7 @@ jobs:
       - name: Set up node server environment variables into .env
         working-directory: "./backend"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
+          echo "ME_CONFIG_MONGODB_SERVER=mongo" >> .env
 
       # Run the start.sh script to spin up servers
       # Note that we are assuming the start.sh script spins up everything within 120s
