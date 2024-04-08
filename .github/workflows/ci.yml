@@ -60,7 +60,7 @@ jobs:
           npx wait-on http://localhost:3000/api/api-docs --timeout 100000
           npm run test:e2e
         env:
-          ME_CONFIG_MONGODB_SERVER: mongo
+          ME_CONFIG_MONGODB_SERVER: localhost
   # Playwright end-to-end test
   chrome-e2e-test:
     needs: [build-test-backend, build-test-frontend]
@@ -92,7 +92,7 @@ jobs:
           npx wait-on http://localhost:5000/ --timeout 120000
           npx wait-on http://localhost:3000/api/api-docs --timeout 120000
         env:
-          ME_CONFIG_MONGODB_SERVER: mongo
+          ME_CONFIG_MONGODB_SERVER: localhost
       - name: Run Playwright E2E tests
 
         working-directory: "./e2eTests"
