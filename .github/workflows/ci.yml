@@ -65,7 +65,7 @@ jobs:
         run: |
           npm run start&
           npm install -g wait-on
-          npx wait-on http://localhost:3000/api/health --timeout 100000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 100000
           npm run test:e2e
   # Playwright end-to-end test
   chrome-e2e-test:
@@ -82,16 +82,15 @@ jobs:
           node-version: "20.11.1" # latest LTS at the time this is written.
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Set up environment variables into .env
-        working-directory: "./e2eTests"
-        run: |
-          echo "REACT_APP_URL=http://localhost:5000" > .env
-          echo "BACKEND_API_URL=http://localhost:3000/api" > .env
+      # - name: Set up environment variables into .env
+      #   working-directory: "./e2eTests"
+      #   run: |
+      #     echo "REACT_APP_URL=http://localhost:5000" > .env
+      #     echo "BACKEND_API_URL=http://localhost:3000/api" > .env
       - name: build playwright
         working-directory: "./e2eTests"
         run: |
           npm ci
-          npm install -g wait-on
       # Run the start.sh script to spin up servers
       # Note that we are assuming the start.sh script spins up everything within 120s
       - name: Start servers
@@ -99,7 +98,8 @@ jobs:
         run: |
           chmod +x start-ci.sh
           (./start-ci.sh)&
-          (npx wait-on http://localhost:5000/ --timeout 100000)
+          npm install -g wait-on
+          npx wait-on http://localhost:5000/ --timeout 100000
           npx wait-on http://localhost:3000/api/health --timeout 100000
       - name: Run Playwright E2E tests
         working-directory: "./e2eTests"
