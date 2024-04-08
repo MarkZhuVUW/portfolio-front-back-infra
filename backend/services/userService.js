@@ -10,7 +10,6 @@ async function createUser(userData) {
 
   return new UserDto(user.userId, user.email);
 }
-
 async function getUserById(userId) {
   const user = await userDao.getUserById(userId);
   
