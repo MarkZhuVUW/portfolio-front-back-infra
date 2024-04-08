@@ -8,13 +8,17 @@ async function connect() {
   // const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
 
   console.log(
-    // eslint-disable-next-line no-undef
-    `mongodb://devroot:devroot@${process.env.ME_CONFIG_MONGODB_SERVER}:27017/`
+    `mongodb://devroot:${encodeURIComponent("devroot")}@${
+      // eslint-disable-next-line no-undef
+      process.env.ME_CONFIG_MONGODB_SERVER
+    }:27017/`
   );
   // FIXME: specify the database name
   await mongoose.connect(
-    // eslint-disable-next-line no-undef
-    `mongodb://devroot:devroot@${process.env.ME_CONFIG_MONGODB_SERVER}:27017/`,
+    `mongodb://devroot:${encodeURIComponent("devroot")}@${
+      // eslint-disable-next-line no-undef
+      process.env.ME_CONFIG_MONGODB_SERVER
+    }:27017/`,
     {
       // mongoose automatically does connection pooling and by default max pool size is 100.
       // We want this to be smaller to reduce load on server.
