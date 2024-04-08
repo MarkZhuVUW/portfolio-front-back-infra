@@ -54,6 +54,10 @@ jobs:
         working-directory: "./backend"
         run: |
           npm test
+      - name: Set up environment variables into .env
+        working-directory: "./backend"
+        run: |
+          echo "ME_CONFIG_MONGODB_SERVER=http://localhost:5000" >> .env
       - name: Enable backend service and test
         working-directory: "./backend"
         run: |
@@ -79,7 +83,7 @@ jobs:
       - name: Set up environment variables into .env
         working-directory: "./e2eTests"
         run: |
-          echo "REACT_APP_URL=http://localhost:5000" > .env
+          echo "REACT_APP_URL=http://localhost:5000" >> .env
           echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
       - name: build playwright
         working-directory: "./e2eTests"
