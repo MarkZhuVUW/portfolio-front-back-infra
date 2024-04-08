@@ -2,7 +2,7 @@ var express = require("express");
 var cookieParser = require("cookie-parser");
 var morgan = require("morgan");
 const cors = require("cors");
-const logger = require('./utils/logger.js');
+const logger = require("./utils/logger.js");
 
 var userController = require("./controllers/userControllers");
 const { connect } = require("./daos/mongoConnection");
@@ -23,6 +23,11 @@ app.use("/api/users", userController);
 // setup swagger ui
 swaggerController(app);
 
-logger.info("server started successfully.")
+// healthcheck endpoint
+app.use("/api/health", (req, res) => {
+  res.status(200).json({ data: "healthy" });
+});
+
+logger.info("server started successfully.");
 
 module.exports = app;
