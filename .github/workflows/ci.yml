@@ -34,9 +34,6 @@ jobs:
         image: mongo
         ports:
           - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: devroot
-          MONGO_INITDB_ROOT_PASSWORD: devroot
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -68,7 +65,7 @@ jobs:
   chrome-e2e-test:
     needs: [build-test-backend, build-test-frontend]
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -85,17 +82,23 @@ jobs:
           npm ci
       # Run the start.sh script to spin up servers
       # Note that we are assuming the start.sh script spins up everything within 120s
+      - name: set env vars for node
+        working-directory: "./backend"
+        run: |
+          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
+        env:
+          ME_CONFIG_MONGODB_SERVER: mongo
       - name: Start servers
         working-directory: "./scripts"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
+          
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on
           npx wait-on http://localhost:5000/ --timeout 120000
           npx wait-on http://localhost:3000/api/api-docs --timeout 120000
         env:
-          ME_CONFIG_MONGODB_SERVER: 127.0.0.1
+          ME_CONFIG_MONGODB_SERVER: mongo
       - name: Run Playwright E2E tests
 
         working-directory: "./e2eTests"
