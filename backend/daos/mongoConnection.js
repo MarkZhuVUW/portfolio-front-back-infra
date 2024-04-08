@@ -8,7 +8,7 @@ async function connect() {
   // const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
   
   // FIXME: specify the database name
-  await mongoose.connect(`mongo://${username}:${password}@${address}/`, {
+  await mongoose.connect(`mongodb://${username}:${password}@${address}/`, {
     // mongoose automatically does connection pooling and by default max pool size is 100.
     // We want this to be smaller to reduce load on server.
     // https://mongoosejs.com/docs/connections.html#connection_pools
