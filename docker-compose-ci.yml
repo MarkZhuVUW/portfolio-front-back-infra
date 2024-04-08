@@ -12,10 +12,15 @@ services:
     depends_on:
       - mongo
       - mongo-express
+    networks:
+      - MONGO
+    links:
+      - "mongodb"
+      - "mongo-express"
     # TODO update this when we deploy to aws
     # volumes:
     #   - ~/.aws/credentials:/root/.aws/credentials:ro
-  mongo:
+  mongodb:
     image: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
@@ -44,11 +49,13 @@ services:
       - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
     depends_on:
-      - mongo
+      - mongodb
     ports:
       - "8080:8081"
     networks:
       - MONGO
+    links:
+      - "mongodb"
   wiremock:
     image: rodolpheche/wiremock
     ports:
@@ -59,9 +66,3 @@ services:
 networks:
   MONGO:
     name: MONGO
-
-volumes:
-  MONGO_DATA:
-    name: MONGO_DATA
-  MONGO_CONFIG:
-    name: MONGO_CONFIG
