@@ -16,18 +16,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 // Setup connection pool of mongoose.
-connect();
+connect().then(() => {
+  app.use("/api/users", userController);
 
-app.use("/api/users", userController);
+  // setup swagger ui
+  swaggerController(app);
 
-// setup swagger ui
-swaggerController(app);
+  // healthcheck endpoint
+  app.use("/api/health", (req, res) => {
+    res.status(200).json({ data: "healthy" });
+  });
 
-// healthcheck endpoint
-app.use("/api/health", (req, res) => {
-  res.status(200).json({ data: "healthy" });
+  logger.info("server started successfully.");
 });
-
-logger.info("server started successfully.");
 
 module.exports = app;
