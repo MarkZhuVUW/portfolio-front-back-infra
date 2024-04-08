@@ -22,11 +22,6 @@ connect().then(() => {
   // setup swagger ui
   swaggerController(app);
 
-  // healthcheck endpoint
-  app.use("/api/health", (req, res) => {
-    res.status(200).json({ data: "healthy" });
-  });
-
   logger.info("server started successfully.");
 });
 
