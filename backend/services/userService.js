@@ -12,11 +12,11 @@ async function createUser(userData) {
 }
 async function getUserById(userId) {
   const user = await userDao.getUserById(userId);
-  
+
   if (user == null) {
     return null;
   }
-  
+
   return new UserDto(user.userId, user.email);
 }
 
