@@ -2,14 +2,10 @@ version: "3"
 
 services:
   cs732-careless-crayfish:
-    environment:
-      - REACT_APP_URL=http://localhost:5000
     image: zdy120939259/cs732-careless-crayfish:latest
     build:
       context: ./
       dockerfile: ./Dockerfile
-      args:
-        - REACT_APP_URL=http://localhost:5000
     ports:
       - 3000:3000
       - 5000:5000
