@@ -8,14 +8,14 @@ async function connect() {
   // const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
 
   console.log(
-    `mongodb://devroot:${encodeURIComponent("devroot")}@${
+    `mongodb://devroot:devroot}@${
       // eslint-disable-next-line no-undef
       process.env.ME_CONFIG_MONGODB_SERVER
     }:27017/`
   );
   // FIXME: specify the database name
   await mongoose.connect(
-    `mongodb://devroot:${encodeURIComponent("devroot")}@${
+    `mongodb://devroot:devroot}@${
       // eslint-disable-next-line no-undef
       process.env.ME_CONFIG_MONGODB_SERVER
     }:27017/`,
