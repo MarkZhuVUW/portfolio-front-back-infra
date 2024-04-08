@@ -65,7 +65,7 @@ jobs:
         run: |
           npm run start&
           npm install -g wait-on
-          npx wait-on http://localhost:3000/api/api-docs --timeout 99999999
+          npx wait-on http://localhost:3000/api/api-docs --timeout 100000
           npm run test:e2e
   # Playwright end-to-end test
   chrome-e2e-test:
@@ -98,8 +98,8 @@ jobs:
           chmod +x start-ci.sh
           ./start-ci.sh &
           npm install -g wait-on
-          npx wait-on http://localhost:5000/ --timeout 99999999
-          npx wait-on http://localhost:3000/api/api-docs --timeout 999999999
+          npx wait-on http://localhost:5000/ --timeout 100000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 1000009
       - name: Run Playwright E2E tests
         working-directory: "./e2eTests"
         run: npm run test:e2e
