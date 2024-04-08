@@ -54,7 +54,11 @@ jobs:
         run: |
           echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
       - name: Enable backend service and test
+      
         working-directory: "./backend"
+        env:
+          MONGO_INITDB_ROOT_USERNAME: devroot
+          MONGO_INITDB_ROOT_PASSWORD: devroot
         run: |
           npm run start&
           npm install -g wait-on
