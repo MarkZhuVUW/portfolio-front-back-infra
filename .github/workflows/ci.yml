@@ -57,7 +57,7 @@ jobs:
       - name: Set up environment variables into .env
         working-directory: "./backend"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=http://localhost:5000" >> .env
+          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
       - name: Enable backend service and test
         working-directory: "./backend"
         run: |
