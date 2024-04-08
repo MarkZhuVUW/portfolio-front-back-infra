@@ -1,66 +1,105 @@
-version: "3"
+name: CI
+# triggers on push to any branch
+on:
+  pull_request:
+jobs:
+  # TODO modify frontend build steps
+  build-test-frontend:
+    runs-on: ubuntu-latest
 
-services:
-  cs732-careless-crayfish:
-    environment:
-      - REACT_APP_URL=http://localhost:5000
-    env_file:
-      - ./.env-ci
-    image: zdy120939259/cs732-careless-crayfish:latest
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-      args:
-        - REACT_APP_URL=http://localhost:5000
-    ports:
-      - 3000:3000
-      - 5000:5000
-    depends_on:
-      - mongo
-      - mongo-express
-    # TODO update this when we deploy to aws
-    # volumes:
-    #   - ~/.aws/credentials:/root/.aws/credentials:ro
-  mongo:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE=cs732
-    ports:
-      - "27017:27017"
-    networks:
-      - MONGO
-    volumes:
-      - type: volume
-        source: MONGO_DATA
-        target: /data/db
-      - type: volume
-        source: MONGO_CONFIG
-        target: /data/configdb
-  mongo-express:
-    image: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=${MONGO_ROOT_USER}
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
-    depends_on:
-      - mongo
-    ports:
-      - "8080:8081"
-    networks:
-      - MONGO
-networks:
-  MONGO:
-    name: MONGO
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.11.1" # latest LTS at the time this is written.
+      - name: build & lint
+        working-directory: "./frontend"
+        run: |
+          npm ci
+          npm run lint
+          npm run build --if-present
+      # Upload the built folder as an artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: react-build
+          path: frontend/build
+      - name: test
+        working-directory: "./frontend"
+        run: |
+          npm test
 
-volumes:
-  MONGO_DATA:
-    name: MONGO_DATA
-  MONGO_CONFIG:
-    name: MONGO_CONFIG
+  # TODO modify backend build steps
+
+  build-test-backend:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: devroot
+          MONGO_INITDB_ROOT_PASSWORD: devroot
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.11.1" # latest LTS at the time this is written.
+      - name: build & lint
+        working-directory: "./backend"
+        run: |
+          npm ci
+          npm run lint
+          npm run build --if-present
+      - name: test
+        working-directory: "./backend"
+        run: |
+          npm test
+      - name: Enable backend service and test
+        working-directory: "./backend"
+        run: |
+          npm run start&
+          npm install -g wait-on
+          npx wait-on http://localhost:3000/api/api-docs --timeout 99999999
+          npm run test:e2e
+  # Playwright end-to-end test
+  chrome-e2e-test:
+    needs: [build-test-backend, build-test-frontend]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.11.1" # latest LTS at the time this is written.
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Set up environment variables into .env
+        working-directory: "./e2eTests"
+        run: |
+          echo "REACT_APP_URL=http://localhost:5000" > .env
+          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
+      - name: Run Playwright E2E tests
+        working-directory: "./e2eTests"
+        run: npm ci
+      # Run the start.sh script to spin up servers
+      # Note that we are assuming the start.sh script spins up everything within 120s
+      - name: Start servers
+        working-directory: "./scripts"
+        run: |
+          chmod +x start-ci.sh
+          ./start-ci.sh &
+          npm install -g wait-on
+          npx wait-on http://localhost:5000/ --timeout 99999999
+          npx wait-on http://localhost:3000/api/api-docs --timeout 999999999
+      - name: Run Playwright E2E tests
+        working-directory: "./e2eTests"
+        run: npm run test:e2e
