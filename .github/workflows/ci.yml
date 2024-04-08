@@ -87,7 +87,7 @@ jobs:
         run: |
           echo "REACT_APP_URL=http://localhost:5000" > .env
           echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
-      - name: Run Playwright E2E tests
+      - name: build playwright
         working-directory: "./e2eTests"
         run: npm ci
       # Run the start.sh script to spin up servers
@@ -99,7 +99,7 @@ jobs:
           ./start-ci.sh &
           npm install -g wait-on
           npx wait-on http://localhost:5000/ --timeout 100000
-          npx wait-on http://localhost:3000/api/api-docs --timeout 1000009
+          npx wait-on http://localhost:3000/api/api-docs --timeout 100000
       - name: Run Playwright E2E tests
         working-directory: "./e2eTests"
         run: npm run test:e2e
