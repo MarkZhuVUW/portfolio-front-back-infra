@@ -98,6 +98,8 @@ jobs:
       # Note that we are assuming the start.sh script spins up everything within 120s
       - name: Start servers
         working-directory: "./scripts"
+        env:
+          ME_CONFIG_MONGODB_SERVER: mongo
         run: |
           chmod +x start-ci.sh
           (./start-ci.sh)&
