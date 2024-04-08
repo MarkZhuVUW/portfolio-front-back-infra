@@ -49,21 +49,18 @@ jobs:
         working-directory: "./backend"
         run: |
           npm test
-      - name: Set up environment variables into .env
-        working-directory: "./backend"
-        run: |
-          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
+
       - name: Enable backend service and test
       
         working-directory: "./backend"
-        env:
-          MONGO_INITDB_ROOT_USERNAME: devroot
-          MONGO_INITDB_ROOT_PASSWORD: devroot
         run: |
+          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
           npm run start&
           npm install -g wait-on
           npx wait-on http://localhost:3000/api/api-docs --timeout 10000
           npm run test:e2e
+        env:
+          ME_CONFIG_MONGODB_SERVER: localhost
   # Playwright end-to-end test
   chrome-e2e-test:
     needs: [build-test-backend, build-test-frontend]
@@ -79,36 +76,30 @@ jobs:
           node-version: "20.11.1" # latest LTS at the time this is written.
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Set up playwright environment variables into .env
-        working-directory: "./e2eTests"
-        run: |
-          echo "REACT_APP_URL=http://localhost:5000" >> .env
-          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
-          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
       - name: build playwright
         working-directory: "./e2eTests"
         run: |
           npm ci
-      - name: Set up node server environment variables into .env
-        working-directory: "./backend"
-        run: |
-          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
-
       # Run the start.sh script to spin up servers
       # Note that we are assuming the start.sh script spins up everything within 120s
       - name: Start servers
         working-directory: "./scripts"
-        env:
-          ME_CONFIG_MONGODB_SERVER: localhost
         run: |
+          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on
           npx wait-on http://localhost:5000/ --timeout 120000
           npx wait-on http://localhost:3000/api/api-docs --timeout 120000
+        env:
+          ME_CONFIG_MONGODB_SERVER: localhost
       - name: Run Playwright E2E tests
+
+        working-directory: "./e2eTests"
+        run: |
+          echo "REACT_APP_URL=http://localhost:5000" >> .env
+          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
+          npm run test:e2e
         env:
           REACT_APP_URL: http://localhost:5000
           BACKEND_API_URL: http://localhost:3000/api
-        working-directory: "./e2eTests"
-        run: npm run test:e2e
