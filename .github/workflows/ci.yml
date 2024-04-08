@@ -57,7 +57,7 @@ jobs:
           echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
           npm run start&
           npm install -g wait-on
-          npx wait-on http://localhost:3000/api/api-docs --timeout 10000
+          npx wait-on http://localhost:3000/api/api-docs --timeout 100000
           npm run test:e2e
         env:
           ME_CONFIG_MONGODB_SERVER: mongo
