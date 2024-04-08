@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 // Setup connection pool of mongoose.
-connect().then(() => {
+// connect().then(() => {
   app.use("/api/users", userController);
 
   // setup swagger ui
@@ -28,6 +28,6 @@ connect().then(() => {
   });
 
   logger.info("server started successfully.");
-});
+// });
 
 module.exports = app;
