@@ -75,11 +75,6 @@ jobs:
           node-version: "20.11.1" # latest LTS at the time this is written.
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-      - name: Set up environment variables into .env
-        working-directory: "./e2eTests"
-        run: |
-          echo "REACT_APP_URL=http://localhost:5000" > .env
-          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
       - name: build playwright
         working-directory: "./e2eTests"
         run: |
@@ -95,5 +90,8 @@ jobs:
           npx wait-on http://localhost:5000/ --timeout 9999999
           # npx wait-on http://localhost:3000/api/api-docs --timeout 9999999
       - name: Run Playwright E2E tests
+        env:
+          REACT_APP_URL: http://localhost:5000
+          BACKEND_API_URL: http://localhost:3000/api
         working-directory: "./e2eTests"
         run: npm run test:e2e
