@@ -54,7 +54,7 @@ jobs:
       
         working-directory: "./backend"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
+          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
           npm run start&
           npm install -g wait-on
           npx wait-on http://localhost:3000/api/api-docs --timeout 10000
@@ -85,7 +85,7 @@ jobs:
       - name: Start servers
         working-directory: "./scripts"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=localhost" >> .env
+          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on
@@ -97,8 +97,8 @@ jobs:
 
         working-directory: "./e2eTests"
         run: |
-          echo "REACT_APP_URL=http://localhost:5000" >> .env
-          echo "BACKEND_API_URL=http://localhost:3000/api" >> .env
+          echo "REACT_APP_URL=$REACT_APP_URL" >> .env
+          echo "BACKEND_API_URL=$BACKEND_API_URL" >> .env
           npm run test:e2e
         env:
           REACT_APP_URL: http://localhost:5000
