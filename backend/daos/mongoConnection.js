@@ -5,11 +5,11 @@ async function connect() {
   const address = "127.0.0.1:27017";
   const username = "devroot";
   const password = "devroot";
-  const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
+  // const encodedPassword = encodeURIComponent(password); // Use encodeURIComponent to ensure special characters are correctly parsed
 
   // FIXME: specify the database name
   await mongoose.connect(
-    `mongodb://${username}:${encodedPassword}@${address}/`,
+    `mongodb://${username}:${password}@${address}/`,
     {
       // mongoose automatically does connection pooling and by default max pool size is 100.
       // We want this to be smaller to reduce load on server.

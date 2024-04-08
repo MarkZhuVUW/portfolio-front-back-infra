@@ -15,8 +15,8 @@ services:
     networks:
       - MONGO
     links:
-      - "mongodb"
-      - "mongo-express"
+      - mongodb
+      - mongo-express
     # TODO update this when we deploy to aws
     # volumes:
     #   - ~/.aws/credentials:/root/.aws/credentials:ro
