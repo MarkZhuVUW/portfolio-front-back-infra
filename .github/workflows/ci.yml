@@ -87,21 +87,12 @@ jobs:
         working-directory: "./e2eTests"
         run: |
           npm ci
-      # Run the start.sh script to spin up servers
-      # Note that we are assuming the start.sh script spins up everything within 120s
-      - name: set env vars for node
-        working-directory: "./backend"
-        run: |
-          echo "MONGO_SERVER=$MONGO_SERVER" >> .env
-          echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
-          echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-        env:
-          MONGO_SERVER: mongo
-          MONGO_USERNAME: devroot
-          MONGO_PASSWORD: devroot
       - name: Start servers
         working-directory: "./scripts"
         run: |
+          echo "MONGO_SERVER=$MONGO_SERVER" >> ../.env
+          echo "MONGO_USERNAME=$MONGO_USERNAME" >> ../.env
+          echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> ../.env
           echo "MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME" >> ../.env
           echo "MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD" >> ../.env
           echo "MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE" >> .env
@@ -119,6 +110,10 @@ jobs:
           npx wait-on http://localhost:5000/ --timeout 120000
           npx wait-on http://localhost:3000/api/api-docs --timeout 120000
         env:
+        # node creds
+          MONGO_SERVER: mongo
+          MONGO_USERNAME: devroot
+          MONGO_PASSWORD: devroot
         # mongo creds
           MONGO_INITDB_ROOT_USERNAME: devroot
           MONGO_INITDB_ROOT_PASSWORD: devroot
