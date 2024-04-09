@@ -88,23 +88,27 @@ jobs:
       - name: set env vars for node
         working-directory: "./backend"
         run: |
-          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
+          echo "MONGODB_SERVER=$MONGODB_SERVER" >> .env
+          echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
+          echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
         env:
-          ME_CONFIG_MONGODB_SERVER: mongo
+          MONGODB_SERVER: mongo
+          MONGO_USERNAME: devroot
+          MONGO_PASSWORD: devroot
       - name: Start servers
         working-directory: "./scripts"
         run: |
-          echo "MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME" >> .env
-          echo "MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD" >> .env
+          echo "MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME" >> ../.env
+          echo "MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD" >> ../.env
           echo "MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE" >> .env
-          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> .env
+          echo "ME_CONFIG_MONGODB_SERVER=$ME_CONFIG_MONGODB_SERVER" >> ../.env
           echo "ME_CONFIG_MONGODB_PORT=$ME_CONFIG_MONGODB_PORT" >> .env
-          echo "ME_CONFIG_MONGODB_ENABLE_ADMIN=$ME_CONFIG_MONGODB_ENABLE_ADMIN" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_DATABASE=$ME_CONFIG_MONGODB_AUTH_DATABASE" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_USERNAME=$ME_CONFIG_MONGODB_AUTH_USERNAME" >> .env
-          echo "ME_CONFIG_MONGODB_AUTH_PASSWORD=$ME_CONFIG_MONGODB_AUTH_PASSWORD" >> .env
-          echo "ME_CONFIG_BASICAUTH_USERNAME=$ME_CONFIG_BASICAUTH_USERNAME" >> .env
-          echo "ME_CONFIG_BASICAUTH_PASSWORD=$ME_CONFIG_BASICAUTH_PASSWORD" >> .env
+          echo "ME_CONFIG_MONGODB_ENABLE_ADMIN=$ME_CONFIG_MONGODB_ENABLE_ADMIN" >> ../.env
+          echo "ME_CONFIG_MONGODB_AUTH_DATABASE=$ME_CONFIG_MONGODB_AUTH_DATABASE" >> ../.env
+          echo "ME_CONFIG_MONGODB_AUTH_USERNAME=$ME_CONFIG_MONGODB_AUTH_USERNAME" >> ../.env
+          echo "ME_CONFIG_MONGODB_AUTH_PASSWORD=$ME_CONFIG_MONGODB_AUTH_PASSWORD" >> ../.env
+          echo "ME_CONFIG_BASICAUTH_USERNAME=$ME_CONFIG_BASICAUTH_USERNAME" >> ../.env
+          echo "ME_CONFIG_BASICAUTH_PASSWORD=$ME_CONFIG_BASICAUTH_PASSWORD" >> ../.env
           chmod +x start-ci.sh
           (./start-ci.sh)&
           npm install -g wait-on

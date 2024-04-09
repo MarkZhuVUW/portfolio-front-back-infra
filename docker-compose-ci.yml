@@ -3,7 +3,9 @@ version: "3"
 services:
   cs732-careless-crayfish:
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
+      - MONGODB_SERVER=${MONGODB_SERVER}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     image: zdy120939259/cs732-careless-crayfish:latest
     build:
       context: ./
