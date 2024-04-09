@@ -2,6 +2,8 @@ version: "3"
 
 services:
   cs732-careless-crayfish:
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
     image: zdy120939259/cs732-careless-crayfish:latest
     build:
       context: ./
