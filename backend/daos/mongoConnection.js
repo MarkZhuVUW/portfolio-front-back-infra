@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Config = require("config");
-const logger = require("./utils/logger.js");
+const logger = require("../utils/logger.js");
 
 async function connect() {
   // const address = Config.get('application.mongo.address');
