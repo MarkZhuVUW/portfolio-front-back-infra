@@ -17,7 +17,7 @@ const stackParams = params[paramsEnv];
 switch (paramsEnv) {
   case "prod":
   case "dev": {
-    new EC2Stack(app, "DevAndProdStack", {
+    new EC2Stack(app, "DevStack", {
       paramsEnv,
       env: {
         account: stackParams.deploymentAccount,
