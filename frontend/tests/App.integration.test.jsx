@@ -1,11 +1,9 @@
 import App from "@frontend-ui/App";
 import { render, screen } from "@testing-library/react";
-import { describe, it } from "vitest";
-
-// TODO put app end-to-end tests here.
-describe("App", () => {
+import { describe, expect, it } from "vitest";
+describe("App renders without issue.", () => {
   it("renders the App component", () => {
-    render(<App />);
-    screen.debug(); // prints out the jsx in the App component unto the command line
+    const { container } = render(<App />);
+    expect(container).toBeTruthy();
   });
 });

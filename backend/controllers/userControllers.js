@@ -18,7 +18,11 @@ const userService = require("../services/userService.js");
  *           properties:
  *             userId:
  *                 type: string
+ *             userName:
+ *                 type: string
  *             email:
+ *                 type: string
+ *             imageUrl:
  *                 type: string
  *     responses:
  *       '200':
@@ -28,10 +32,17 @@ const userService = require("../services/userService.js");
  */
 router.post("/", async function createUser(req, res) {
   try {
-    const user = await userService.createUser(req.body);
+    const { userName, email, userId, imageUrl } = req.body;
+
+    const user = await userService.createUser({
+      userName,
+      email,
+      userId,
+      imageUrl,
+    });
     res.status(201).json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json(error);
   }
 });
 
@@ -61,12 +72,43 @@ router.get("/:userId", async function getUserById(req, res) {
   try {
     const userId = req.params.userId;
     const user = await userService.getUserById(userId);
-    if (!user) {
-      res.status(404).json({ error: "user not found" });
-    }
-    res.json(user);
+
+    return res.json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json(error);
+  }
+});
+
+/**
+ * @swagger
+ * /api/users/{userId}/votes:
+ *   get:
+ *     tags:
+ *       - User Controller
+ *     summary: Get all votes for userId
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Unique identifier of the vote.
+ *     responses:
+ *       200:
+ *         description: Votes found successfully.
+ *       404:
+ *         description: Votes not found.
+ *       500:
+ *         description: Internal server error, unable to retrieve vote.
+ */
+router.get("/:userId/votes", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const votes = await userService.getAllVotes(userId);
+
+    return res.json(votes);
+  } catch (error) {
+    return res.status(500).json(error);
   }
 });
 

@@ -5,9 +5,9 @@ const options = {
   swaggerDefinition: {
     restapi: "3.1.0",
     info: {
-      title: "cs732-careless-crayfish api",
+      title: "give-it-a-good-name api",
       version: "1.0.0",
-      description: "cs732-careless-crayfish API",
+      description: "give-it-a-good-name API",
     },
     servers: [
       {
@@ -15,7 +15,7 @@ const options = {
       },
     ],
   },
-  apis: ["./controllers/*.js"],
+  apis: ["/usr/src/app/backend/controllers/*.js", "./controllers/*.js"],
 };
 
 const specs = swaggerJsdoc(options);

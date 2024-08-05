@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Name of your app
-APP_NAME="cs732-careless-crayfish"
+APP_NAME="give-it-a-good-name"
 
 # Docker image name
 IMAGE_NAME="$APP_NAME:latest"
