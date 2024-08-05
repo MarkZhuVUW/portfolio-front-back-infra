@@ -1,3 +1,8 @@
+# Deployment URL
+http://ec2-13-239-119-130.ap-southeast-2.compute.amazonaws.com:5000
+
+# Solution Architecture
+![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
 # Code Structure
 
 ```bash
@@ -24,12 +29,6 @@ docker-compose-prod.yml - docker-compose for PROD environment
 docker-compose.yml - docker-compose for LOCAL DEV environment
 Dockerfile - Frontend & Backend App docker container
 ```
-
-# how to set up local development environment
-## frontend
-## backend
-## database
-## playwright e2e tests
 
 # Important: How to set up local development environment
 
