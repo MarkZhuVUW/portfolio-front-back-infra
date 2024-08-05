@@ -5,8 +5,7 @@
     "application": "bin/application.js"
   },
   "scripts": {
-    "deploy-dev": "cdk deploy -vv --require-approval never --all -c paramsEnv=dev",
-    "deploy-prod": "cdk deploy -vv --require-approval never --all -c paramsEnv=prod"
+    "deploy-dev": "cdk deploy -vv --require-approval never --all -c paramsEnv=dev"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

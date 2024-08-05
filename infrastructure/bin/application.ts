@@ -15,7 +15,6 @@ if (!paramsEnv) {
 const stackParams = params[paramsEnv];
 
 switch (paramsEnv) {
-  case "prod":
   case "dev": {
     new EC2Stack(app, "DevStack", {
       paramsEnv,
