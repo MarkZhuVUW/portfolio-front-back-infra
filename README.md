@@ -23,12 +23,6 @@ docker-compose.yml - docker-compose for LOCAL DEV environment
 Dockerfile - Frontend & Backend App docker container
 ```
 
-# how to set up local development environment
-## frontend
-## backend
-## database
-## playwright e2e tests
-
 # Important: How to set up local development environment
 
 ## Install nvm
