@@ -212,10 +212,16 @@ If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` wo
 
 ##### A: Please make sure you use Git Bash to run the command if you are on Windows
 
-### 2. For AWS CDK code getting error when running `npm run deploy-dev`
+### 2. docker or docker-compose command not found
+
+##### A: Please review `How to set up local development environment` section and install docker desktop.
+
+##### A: Please make sure you use Git Bash to run the command if you are on Windows
+
+### 3. For AWS CDK code getting error when running `npm run deploy-dev`
 
 ##### A: See `testing AWS CDK infrastructure as code` section for details
 
-### 3. How do I access latest deployed website
+### 4. How do I access latest deployed website
 
 ##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working public DNS. Get it from the latest successful `CD` build from Github Actions
