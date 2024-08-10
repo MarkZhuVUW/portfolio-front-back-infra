@@ -7,8 +7,6 @@
 > backend - Node & Express & MongoDB code
     | .env local node config/creds
     | package.json - backend dependencies
-> diagrams - stores all diagram code(if any)
-    | sequence-diagram.txt - sequence diagram code
 > e2eTests - playwright e2e tests(chrome only)
     | .env - local playwright configs
 > frontend - Vite React
