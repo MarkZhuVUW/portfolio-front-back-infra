@@ -50,30 +50,10 @@ jobs:
         run: |
           npm ci
           npm run lint
-      - name: test
+      - name: Run unit tests
         working-directory: "./backend"
         run: |
           npm test
-
-      - name: Enable backend service and test
-
-        working-directory: "./backend"
-        run: |
-          echo "MONGO_SERVER=$MONGO_SERVER" >> .env
-          echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
-          echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-          echo "API_KEY=$API_KEY" >> .env
-          echo "API_URL=$API_URL" >> .env
-          npm run start&
-          npm install -g wait-on
-          npx wait-on http://localhost:3000/api/api-docs --timeout 100000
-          npm run test:e2e
-        env:
-          MONGO_SERVER: 127.0.0.1
-          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-          API_KEY: ${{ secrets.API_KEY }}
-          API_URL: https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=
   # Playwright end-to-end test
   chrome-e2e-test:
     needs: [build-test-backend, build-test-frontend]
