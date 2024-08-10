@@ -3,14 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --env-file=.env ./bin/www",
     "start:dev": "NODE_ENV=wiremock nodemon --exec node --env-file=.env ./bin/www",
-    "start:prod": "NODE_ENV=default nodemon --exec node --env-file=.env ./bin/www",
     "start:dep": "cd ../ && sh scripts/start.sh",
     "lint": "eslint . --fix --ext js",
     "test": "jest",
-    "test:dev": "httpyac send -a -e dev -o short tests/http/**/*.http",
-    "test:e2e": "httpyac send -a -e e2e -o short tests/http/**/*.http",
     "build:image": "cd ../ && sh scripts/build.sh"
   },
   "dependencies": {
@@ -19,7 +15,6 @@
     "debug": "~2.6.9",
     "express": "^4.19.2",
     "http-errors": "~1.6.3",
-    "httpyac": "^6.12.1",
     "mongoose": "^8.2.4",
     "morgan": "~1.9.1",
     "node-fetch": "^2.7.0",

@@ -4,8 +4,7 @@ permissions:
   contents: read
 # triggers on pull_request for ease of testing
 on:
-  # pull_request:
-  push:
+  pull_request:
 
 jobs:
   archive-src-code:
@@ -131,7 +130,7 @@ jobs:
           aws-region: ap-southeast-2
       - name: Deploy to aws cdk
         run: |
-          npm run deploy-prod
+          npm run deploy-dev
         working-directory: "./infrastructure"
   deploy-ec2:
     needs: archive-src-code

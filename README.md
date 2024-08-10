@@ -177,10 +177,6 @@ cd ./infrastructure
 npm run deploy-dev
 ```
 
-## Httpyac test example
-
-Follow the instruction from https://httpyac.github.io/guide/examples.html
-
 ## Wiremock
 
 Put your mock files under `deployment/wiremock/__files` and `deployment/wiremock/mappings`
