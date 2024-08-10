@@ -6,9 +6,8 @@ permissions:
 
 # triggers on push to any branch
 on:
-  # pull_request:
-  push:
-  
+  pull_request:
+
 jobs:
   build-test-frontend:
     runs-on: ubuntu-latest
