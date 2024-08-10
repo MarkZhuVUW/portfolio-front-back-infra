@@ -86,7 +86,7 @@ brew install docker
 
 ---
 
-# 4. How to run frontend react, backend node, mongodb in dev mode or as docker containers
+How to run frontend react, backend node, mongodb in dev mode or as docker containers
 
 ## 1. Run mongodb & wiremock(docker-compose)
 
