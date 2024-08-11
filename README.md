@@ -1,8 +1,7 @@
-# Deployment URL
-http://ec2-13-239-119-130.ap-southeast-2.compute.amazonaws.com:5000
 
 # Solution Architecture
 ![SOLUTION-DIAGRAM](https://github.com/user-attachments/assets/3fd86ea3-6f87-4174-8391-a50ae3529819)
+
 # Code Structure
 
 ```bash
@@ -12,8 +11,6 @@ http://ec2-13-239-119-130.ap-southeast-2.compute.amazonaws.com:5000
 > backend - Node & Express & MongoDB code
     | .env local node config/creds
     | package.json - backend dependencies
-> diagrams - stores all diagram code(if any)
-    | sequence-diagram.txt - sequence diagram code
 > e2eTests - playwright e2e tests(chrome only)
     | .env - local playwright configs
 > frontend - Vite React
@@ -22,7 +19,7 @@ http://ec2-13-239-119-130.ap-southeast-2.compute.amazonaws.com:5000
 > infrastructure AWS CDK TypeScript
     | package.json - AWS CDK dependencies
 > scripts - useful scripts for local dev, CI and CD
-> wiremock - mock gemini ai response for local dev
+> wiremock - A framework to mock api responses.
 .env - MONGODB local config/creds
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
@@ -108,12 +105,22 @@ cd ./frontend
 npm run dev
 ```
 
-## 3. Run backend node
+## 3. Spin up database through docker compose.
 
 ```bash
 cd ./backend
-npm start
-# (starts node server at `localhost:3000`)
+npm run start:dep
+# (starts database docker containers)
+```
+
+## 4. Run backend node
+
+Prerequisite: please do step 3 before running backend node.
+
+```bash
+cd ./backend
+npm run start:dev
+# (starts node server in development mode at `localhost:3000`)
 ```
 
 ## MongoDB
@@ -122,23 +129,13 @@ npm start
 
 1. default username: devroot
 1. default password: devroot
-1. default database: cs732
+1. default database: test
 
 ## Login to MongoDB Admin Portal
 
 http://localhost:8080/db/admin/
 
 Username: `dev`, Password:`dev`
-
----
-
-### Verify the instance of the image is up and running
-
-1. Visit the backend: http://localhost:8001/api/users
-2. Visit the frontend: http://localhost:8000/
-3. Visit mongodb admin portal: http://localhost:8080 with username: dev, password: dev
-
----
 
 # How to test the code
 
@@ -152,16 +149,6 @@ Username: `dev`, Password:`dev`
 1. `cd ./backend`
 2. `npm test`
 
-## Backend api integration tests
-
-1. spin up backend node.
-2. spin up mongodb database through docker-compose
-
-```
-cd ./backend
-npm run test:e2e
-```
-
 You can also manually test APIs with swagger UI
 
 1. go to http://localhost:3000/api/api-docs
@@ -169,7 +156,6 @@ You can also manually test APIs with swagger UI
 
 ## Testing AWS CDK infrastructure as code
 
-We currently put dev and prod stacks all in one account but you can test deploying the stack with your own suffix.
 You need to reachout to Mark(mzhu929) for giving you permission to access AWS console and deploying stacks as this is his personal AWS account.
 
 ```bash
@@ -179,9 +165,11 @@ npm run deploy-dev
 
 ## Wiremock
 
+Wiremock is a framework used to mock api responses. This is helpful when working with external APIs that have call limits or are slow to respond.
+
 Put your mock files under `deployment/wiremock/__files` and `deployment/wiremock/mappings`
 
-Refere the `json` example here: https://wiremock.org/docs/stubbing/
+Refere to the `json` example here: https://wiremock.org/docs/stubbing/
 
 ## Browser end-to-end tests
 
@@ -195,7 +183,7 @@ install playwright and chromium
 npx playwright install --with-deps chromium
 ```
 
-Ensure you have spinned up react, node servers & mongodb docker containers locally. If you have not, follow the `How to run frontend react, backend node, mongodb in dev mode or as docker containers` guide above.
+Ensure you have spinned up react, node servers & mongodb docker containers locally. If you have not, follow the `Important: How to set up local development environment` guide above.
 
 under project root folder:
 
@@ -204,17 +192,22 @@ under project root folder:
 
 If you raise a pr, Github Actions will trigger the `./github/workflow/ci.yml` workflow which runs all automated tests
 
-
 # Q & A
 
 ### 1. sh command not found running npm commands
 
 ##### A: Please make sure you use Git Bash to run the command if you are on Windows
 
-### 2. For AWS CDK code getting error when running `npm run deploy-dev`
+### 2. docker or docker-compose command not found
+
+##### A: Please review `Important: How to set up local development environment` section and install docker desktop.
+
+##### A: Please make sure you use Git Bash to run the command if you are on Windows
+
+### 3. For AWS CDK code getting error when running `npm run deploy-dev`
 
 ##### A: See `testing AWS CDK infrastructure as code` section for details
 
-### 3. How do I access latest deployed website
+### 4. How do I access latest deployed website
 
-##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working public DNS. Get it from the latest successful `CD` build from Github Actions
+##### A: We provision new EC2 instances if we have infrastructure change. Need to go to github actions to grab the latest working frontend url. Get it from the latest successful `CD` build from Github Actions

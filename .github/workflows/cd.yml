@@ -4,7 +4,9 @@ permissions:
   contents: read
 # triggers on pull_request for ease of testing
 on:
-  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   archive-src-code:
