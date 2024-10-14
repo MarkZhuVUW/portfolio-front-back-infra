@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  give-it-a-good-name:
-    image: zdy120939259/give-it-a-good-name:latest
+  portfolio-app:
+    image: zdy120939259/portfolio-app:latest
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -13,7 +13,7 @@ services:
       - mongo
       - mongo-express
     networks:
-      - MONGO
+      - PORTFOLIO-APP
   mongo:
     image: mongo
     env_file:
@@ -25,7 +25,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - MONGO
+      - PORTFOLIO-APP
     volumes:
       - type: volume
         source: MONGO_DATA
@@ -52,10 +52,27 @@ services:
     ports:
       - "8080:8081"
     networks:
-      - MONGO
+      - PORTFOLIO-APP
+  nginx:
+    restart: always
+    image: nginx
+    env_file:
+      - ./.env
+    ports:
+      - 443:443
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/cert.crt:/etc/nginx/conf.d/cert.crt
+      - ./nginx/pk.key:/etc/nginx/conf.d/pk.key
+    depends_on:
+      - portfolio-app
+      - mongo-express
+      - mongo
+    networks:
+      - DATABASE
 networks:
-  MONGO:
-    name: MONGO
+  PORTFOLIO-APP:
+    name: PORTFOLIO-APP
 volumes:
   MONGO_DATA:
     name: MONGO_DATA

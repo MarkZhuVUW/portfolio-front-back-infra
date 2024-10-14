@@ -19,7 +19,6 @@
 > infrastructure AWS CDK TypeScript
     | package.json - AWS CDK dependencies
 > scripts - useful scripts for local dev, CI and CD
-> wiremock - A framework to mock api responses.
 .env - MONGODB local config/creds
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
@@ -85,7 +84,7 @@ brew install docker
 
 How to run frontend react, backend node, mongodb in dev mode or as docker containers
 
-## 1. Run mongodb & wiremock(docker-compose)
+## 1. Run mongodb (docker-compose)
 
 Run this from Git Bash if you use Windows
 
@@ -157,19 +156,6 @@ You can also manually test APIs with swagger UI
 ## Testing AWS CDK infrastructure as code
 
 You need to reachout to Mark(mzhu929) for giving you permission to access AWS console and deploying stacks as this is his personal AWS account.
-
-```bash
-cd ./infrastructure
-npm run deploy-dev
-```
-
-## Wiremock
-
-Wiremock is a framework used to mock api responses. This is helpful when working with external APIs that have call limits or are slow to respond.
-
-Put your mock files under `deployment/wiremock/__files` and `deployment/wiremock/mappings`
-
-Refere to the `json` example here: https://wiremock.org/docs/stubbing/
 
 ## Browser end-to-end tests
 

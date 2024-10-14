@@ -23,7 +23,7 @@ export const params: { [x: string]: StackParams } = {
     vpcId: vpcIds["dev"],
   },
   prod: {
-    deploymentAccount: accounts["dev"],
+    deploymentAccount: accounts["prod"],
     deploymentRegion: "ap-southeast-2",
     resourceNameSuffix: "prod",
     vpcId: vpcIds["prod"],

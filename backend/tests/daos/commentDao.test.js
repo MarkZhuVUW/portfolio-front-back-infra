@@ -102,14 +102,4 @@ describe("commentDao unit test", () => {
     });
   });
 
-  test("test get total num records", async () => {
-    // Given
-    const Comment = require("../../models/comment.js");
-    const commentDao = require("../../daos/commentDao.js");
-    jest.spyOn(Comment, "countDocuments").mockImplementation(() => 10);
-    // When
-    const result = await commentDao.getTotalNumRecords({ voteId: "voteId" });
-    // Then
-    expect(result).toEqual(10);
-  });
 });

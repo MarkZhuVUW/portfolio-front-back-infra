@@ -83,13 +83,12 @@ jobs:
           echo "MONGO_SERVER=$MONGO_SERVER" >> .env
           echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
           echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-          echo "API_URL=$API_URL" >> .env
+          echo "SWAGGER_API_BASE_URL=https://api.markz-portfolio.uk" >> .env
         env:
           # node creds
           MONGO_SERVER: mongo
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
           MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-          API_URL: http://localhost:8081/v1beta/models/gemini-pro:generateContent?key=
       - name: Set docker-compose configs
         working-directory: "./"
         run: |

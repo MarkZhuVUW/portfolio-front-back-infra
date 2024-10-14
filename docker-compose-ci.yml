@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  give-it-a-good-name:
-    image: zdy120939259/give-it-a-good-name:latest
+  portfolio-app:
+    image: zdy120939259/portfolio-app:latest
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -13,7 +13,7 @@ services:
       - mongo
       - mongo-express
     networks:
-      - MONGO
+      - PORTFOLIO-APP
     # TODO update this when we deploy to aws
     # volumes:
     #   - ~/.aws/credentials:/root/.aws/credentials:ro
@@ -28,7 +28,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - MONGO
+      - PORTFOLIO-APP
     volumes:
       - type: volume
         source: MONGO_DATA
@@ -54,10 +54,10 @@ services:
     ports:
       - "8080:8081"
     networks:
-      - MONGO
+      - PORTFOLIO-APP
 networks:
-  MONGO:
-    name: MONGO
+  PORTFOLIO-APP:
+    name: PORTFOLIO-APP
 volumes:
   MONGO_DATA:
     name: MONGO_DATA
