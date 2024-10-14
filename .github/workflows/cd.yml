@@ -3,12 +3,11 @@ permissions:
   id-token: write
   contents: read
 # triggers on pull_request for ease of testing
-# on:
-#   push:
-#     branches:
-#       - master
 on:
-  pull_request:
+  push:
+    branches:
+      - master
+
 jobs:
   archive-src-code:
     runs-on: ubuntu-latest
