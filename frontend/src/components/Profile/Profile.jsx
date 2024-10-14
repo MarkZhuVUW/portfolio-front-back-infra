@@ -42,42 +42,6 @@ export const Profile = () => {
   useEffect(() => {
     setPageTitle("Profile");
   });
-  const [votes, setVotes] = useState([]);
-  const [expanded, setExpanded] = useState([]);
-  const handleExpandClick = (index) => {
-    setExpanded((prevExpanded) => {
-      const newExpanded = [...prevExpanded];
-      newExpanded[index] = !newExpanded[index];
-      return newExpanded;
-    });
-  };
-  const [isLoadingVotes, setIsLoadingVotes] = useState(false);
-  const limit = 5;
-
-  const fetchAllVotes = async () => {
-    try {
-      setIsLoadingVotes(true);
-
-      const response = await get(
-        `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/users/${user.userId}/votes`,
-      );
-      setVotes(response.data);
-      setExpanded(new Array(response.data.length).fill(false));
-    } finally {
-      setIsLoadingVotes(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllVotes();
-  }, []);
-  const [openComments, setOpenComments] = useState(false);
-  const [currVoteId, setCurrVoteId] = useState("");
-
-  const handleToggleCommentsDialog = (voteId) => {
-    setOpenComments(!openComments);
-    setCurrVoteId(voteId);
-  };
 
   if (!user) {
     return (
