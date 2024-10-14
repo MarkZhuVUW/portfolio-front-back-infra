@@ -86,19 +86,5 @@ export const Profile = () => {
       </Typography>
     );
   }
-  return (
-    <Box mt={10} textAlign="center">
-      <CommentDialogPaginated
-        openComments={openComments}
-        setOpenComments={setOpenComments}
-        userId={user.userId}
-        voteId={currVoteId}
-        voteTitle={
-          currVoteId &&
-          votes &&
-          votes.find((vote) => vote._id === currVoteId).title
-        }
-      />
-    </Box>
-  );
+  return <Box mt={10} textAlign="center"></Box>;
 };
