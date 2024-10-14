@@ -29,7 +29,6 @@ import { useAPI, useAuth, useRoute } from "../GlobalProviders";
 import { v4 } from "uuid";
 import _ from "lodash";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { CommentDialogPaginated } from "../Comment";
 import { ExpandMore } from "@mui/icons-material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";

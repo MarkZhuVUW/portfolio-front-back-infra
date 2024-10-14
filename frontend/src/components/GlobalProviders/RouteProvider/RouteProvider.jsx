@@ -12,7 +12,6 @@ import AuthPageProvider from "@frontend-ui/components/AuthPage/AuthPageProvider"
 import {
   Landing,
 } from "@frontend-ui/components/Landing";
-import { CommentDialogPaginated } from "@frontend-ui/components/Comment/";
 import { Button, Container, Grid, Stack } from "@mui/material";
 import { Profile } from "@frontend-ui/components/Profile/Profile";
 import { Box } from "@mui/system";
