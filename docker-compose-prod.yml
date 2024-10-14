@@ -69,7 +69,7 @@ services:
       - mongo-express
       - mongo
     networks:
-      - DATABASE
+      - PORTFOLIO-APP
 networks:
   PORTFOLIO-APP:
     name: PORTFOLIO-APP
