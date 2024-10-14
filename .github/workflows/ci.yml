@@ -83,7 +83,7 @@ jobs:
           echo "MONGO_SERVER=$MONGO_SERVER" >> .env
           echo "MONGO_USERNAME=$MONGO_USERNAME" >> .env
           echo "MONGO_PASSWORD=$MONGO_PASSWORD" >> .env
-          echo "SWAGGER_API_BASE_URL=https://api.markz-portfolio.uk" >> .env
+          echo "SWAGGER_API_BASE_URL=http://give-it-a-good-name:3000" >> .env
         env:
           # node creds
           MONGO_SERVER: mongo
