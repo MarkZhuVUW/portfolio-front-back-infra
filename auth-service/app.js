@@ -16,7 +16,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+
+// CORS configuration
+const corsOptions = {
+  origin: "https://markz-portfolio.uk",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Setup connection pool of mongoose.
 connect().then(() => {
