@@ -39,13 +39,8 @@ export class EC2Stack extends Stack {
         "Allow inbound to nginx at 443",
       allowAllOutbound: true,
     });
-    securityGroup.addIngressRule(Peer.anyIpv4(), Port.allTraffic());
-
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(443));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(3000));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(5000));
-    // securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
+    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(443));
+    securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
 
     const ec2Instance = new Instance(this, "EC2Instance", {
       vpc,
