@@ -23,7 +23,7 @@ export class EC2Stack extends Stack {
     super(scope, id, props);
 
     // use default vpc as it is free of charge
-    const vpc = new Vpc(this, "give-it-a-good-name-vpc", {
+    const vpc = new Vpc(this, "portfolio-app-vpc", {
       maxAzs: 1,
       // nat gateways are not covered by free tier
       // so we cannot put our ec2 under private subnet and exposed to public via NAT Gateways
@@ -50,7 +50,7 @@ export class EC2Stack extends Stack {
       instanceType: InstanceType.of(InstanceClass.T2, InstanceSize.MICRO),
       machineImage: MachineImage.latestAmazonLinux2023(),
       securityGroup,
-      instanceName: "give-it-a-good-name-ec2",
+      instanceName: "portfolio-app-ec2",
       keyPair: KeyPair.fromKeyPairName(this, "KeyPair", "mykey"),
     });
 

@@ -26,21 +26,6 @@ export const useAuthPage = () => useContext(AuthPageContext);
 
 const AuthPageProvider = () => {
   const { googleLogin, handleSkipLogin } = useAuth();
-  const [switchingText, setSwitchingText] = useState("Restaurants");
-  const switchingOptions = [
-    "Restaurants",
-    "Clubs",
-    "Museums",
-    "Outdoor Spots",
-    "Movies",
-  ];
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * switchingOptions.length);
-      setSwitchingText(switchingOptions[randomIndex]);
-    }, 2000); // Switch text every 2 seconds
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <AuthPageContext.Provider value={{}}>
@@ -72,9 +57,6 @@ const AuthPageProvider = () => {
               height: "100%", // Ensure the Box takes up the full height of its parent
             }}
           >
-            <Typography variant="h4" gutterBottom>
-              Find me: <span style={{ color: "blue" }}>{switchingText}</span>
-            </Typography>
             <Button
               component="label"
               fontSize="large"

@@ -10,12 +10,8 @@ import {
 import { useAuth } from "../AuthProvider";
 import AuthPageProvider from "@frontend-ui/components/AuthPage/AuthPageProvider";
 import {
-  RestaurantRecommendations,
   Landing,
-  RestaurantOptions,
-} from "@frontend-ui/components/Recommendation";
-import { Voting } from "@frontend-ui/components/Voting";
-import { CommentDialogPaginated } from "@frontend-ui/components/Comment/";
+} from "@frontend-ui/components/Landing";
 import { Button, Container, Grid, Stack } from "@mui/material";
 import { Profile } from "@frontend-ui/components/Profile/Profile";
 import { Box } from "@mui/system";
@@ -81,58 +77,7 @@ const RouteProvider = () => {
               isAuthenticated ? (
                 <>
                   <HeaderProvider />
-
                   <Landing />
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated/recommend/restaurant-options"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-                  <RestaurantOptions />
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="10vh"
-                  >
-                    <Stack direction="row" spacing={2}>
-                      <GoBackButton />
-                      <GoForwardButton />
-                    </Stack>
-                  </Box>
-                </>
-              ) : (
-                <Navigate to="/auth" />
-              )
-            }
-          />
-
-          <Route
-            path="/authenticated/recommend/restaurants/:location"
-            element={
-              isAuthenticated ? (
-                <>
-                  <HeaderProvider />
-                  <RestaurantRecommendations />
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="10vh"
-                  >
-                    <Stack direction="row" spacing={2}>
-                      <GoBackButton />
-                      <GoForwardButton />
-                    </Stack>
-                  </Box>
                 </>
               ) : (
                 <Navigate to="/auth" />
@@ -162,26 +107,6 @@ const RouteProvider = () => {
               ) : (
                 <Navigate to="/auth" />
               )
-            }
-          />
-          <Route
-            path="/voting"
-            element={
-              <>
-                <HeaderProvider />
-                <Voting />
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  minHeight="10vh"
-                >
-                  <Stack direction="row" spacing={2}>
-                    <GoBackButton />
-                    <GoForwardButton />
-                  </Stack>
-                </Box>
-              </>
             }
           />
         </Routes>

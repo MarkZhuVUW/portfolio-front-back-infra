@@ -5,7 +5,11 @@
     "application": "bin/application.js"
   },
   "scripts": {
-    "deploy-dev": "cdk deploy -vv --require-approval never --all -c paramsEnv=dev"
+    "synth-dev": "cdk synth -vv --all -c paramsEnv=dev",
+    "synth-prod": "cdk synth -vv --all -c paramsEnv=dev",
+    "deploy-dev": "cdk deploy -vv --require-approval never --all -c paramsEnv=dev",
+    "destroy-dev": "cdk destroy -vv --all -c paramsEnv=dev --force",
+    "deploy-prod": "cdk deploy -vv --require-approval never --all -c paramsEnv=dev"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

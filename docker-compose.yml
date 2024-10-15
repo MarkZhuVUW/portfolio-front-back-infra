@@ -12,7 +12,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - MONGO
+      - PORTFOLIO-APP
     volumes:
       - type: volume
         source: MONGO_DATA
@@ -38,17 +38,10 @@ services:
     ports:
       - "8080:8081"
     networks:
-      - MONGO
-  wiremock:
-    image: rodolpheche/wiremock
-    ports:
-      - "8081:8080" #host port:container port
-    volumes:
-      - ./wiremock/mappings:/home/wiremock/mappings
-      - ./wiremock/__files:/home/wiremock/__files
+      - PORTFOLIO-APP
 networks:
   MONGO:
-    name: MONGO
+    name: PORTFOLIO-APP
 volumes:
   MONGO_DATA:
     name: MONGO_DATA
