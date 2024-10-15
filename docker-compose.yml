@@ -40,7 +40,7 @@ services:
     networks:
       - PORTFOLIO-APP
 networks:
-  MONGO:
+  PORTFOLIO-APP:
     name: PORTFOLIO-APP
 volumes:
   MONGO_DATA:
