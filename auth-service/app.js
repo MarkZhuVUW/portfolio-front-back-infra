@@ -17,29 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// CORS configuration
-const corsOptions = {
-  origin: "https://markz-portfolio.uk", // Your allowed origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
-  exposedHeaders: ["Access-Control-Allow-Origin"],
-};
 
-// Prevent caching of preflight requests
-app.options("*", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://markz-portfolio.uk");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate"
-  );
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
-  res.sendStatus(204); // No Content
-});
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Setup connection pool of mongoose.
 connect().then(() => {
