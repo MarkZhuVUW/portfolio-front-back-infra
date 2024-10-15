@@ -8,9 +8,9 @@
 > .github - Github Actions CICD Pipeline
     | cd.yml - continuous deployment workflow
     | ci.yml - continuous integration workflow
-> backend - Node & Express & MongoDB code
+> auth-service - Node & Express & MongoDB code
     | .env local node config/creds
-    | package.json - backend dependencies
+    | package.json - auth-service dependencies
 > e2eTests - playwright e2e tests(chrome only)
     | .env - local playwright configs
 > frontend - Vite React
@@ -23,7 +23,7 @@
 docker-compose-ci.yml - docker-compose for CI environment
 docker-compose-prod.yml - docker-compose for PROD environment
 docker-compose.yml - docker-compose for LOCAL DEV environment
-Dockerfile - Frontend & Backend App docker container
+Dockerfile - Frontend & auth-service App docker container
 ```
 
 # Important: How to set up local development environment
@@ -61,10 +61,10 @@ cd ./frontend
 npm install
 ```
 
-## setup backend node project
+## setup auth-service node project
 
 ```bash
-cd ../backend
+cd ../auth-service
 npm install
 ```
 
@@ -82,7 +82,7 @@ brew install docker
 
 ---
 
-How to run frontend react, backend node, mongodb in dev mode or as docker containers
+How to run frontend react, auth-service node, mongodb in dev mode or as docker containers
 
 ## 1. Run mongodb (docker-compose)
 
@@ -90,7 +90,7 @@ Run this from Git Bash if you use Windows
 
 ```bash
 # In a new shell, and keep this shell opened
-cd ./backend
+cd ./auth-service
 npm run start:dep
 ```
 
@@ -107,17 +107,17 @@ npm run dev
 ## 3. Spin up database through docker compose.
 
 ```bash
-cd ./backend
+cd ./auth-service
 npm run start:dep
 # (starts database docker containers)
 ```
 
-## 4. Run backend node
+## 4. Run auth-service node
 
-Prerequisite: please do step 3 before running backend node.
+Prerequisite: please do step 3 before running auth-service node.
 
 ```bash
-cd ./backend
+cd ./auth-service
 npm run start:dev
 # (starts node server in development mode at `localhost:3000`)
 ```
@@ -143,9 +143,9 @@ Username: `dev`, Password:`dev`
 1. `cd ./frontend`
 2. `npm test`
 
-## Backend unit tests
+## auth-service unit tests
 
-1. `cd ./backend`
+1. `cd ./auth-service`
 2. `npm test`
 
 You can also manually test APIs with swagger UI

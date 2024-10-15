@@ -11,12 +11,9 @@ services:
       - 5000:5000
     depends_on:
       - mongo
-      - mongo-express
+      # - mongo-express
     networks:
       - PORTFOLIO-APP
-    # TODO update this when we deploy to aws
-    # volumes:
-    #   - ~/.aws/credentials:/root/.aws/credentials:ro
   mongo:
     image: mongo
     env_file:
@@ -36,25 +33,25 @@ services:
       - type: volume
         source: MONGO_CONFIG
         target: /data/configdb
-  mongo-express:
-    image: mongo-express
-    env_file:
-      - ./.env
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=${ME_CONFIG_MONGODB_SERVER}
-      - ME_CONFIG_MONGODB_PORT=${ME_CONFIG_MONGODB_PORT}
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=${ME_CONFIG_MONGODB_ENABLE_ADMIN}
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=${ME_CONFIG_MONGODB_AUTH_DATABASE}
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=${ME_CONFIG_MONGODB_AUTH_USERNAME}
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=${ME_CONFIG_MONGODB_AUTH_PASSWORD}
-      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
-    depends_on:
-      - mongo
-    ports:
-      - "8080:8081"
-    networks:
-      - PORTFOLIO-APP
+  # mongo-express:
+  #   image: mongo-express
+  #   env_file:
+  #     - ./.env
+  #   environment:
+  #     - ME_CONFIG_MONGODB_SERVER=${ME_CONFIG_MONGODB_SERVER}
+  #     - ME_CONFIG_MONGODB_PORT=${ME_CONFIG_MONGODB_PORT}
+  #     - ME_CONFIG_MONGODB_ENABLE_ADMIN=${ME_CONFIG_MONGODB_ENABLE_ADMIN}
+  #     - ME_CONFIG_MONGODB_AUTH_DATABASE=${ME_CONFIG_MONGODB_AUTH_DATABASE}
+  #     - ME_CONFIG_MONGODB_AUTH_USERNAME=${ME_CONFIG_MONGODB_AUTH_USERNAME}
+  #     - ME_CONFIG_MONGODB_AUTH_PASSWORD=${ME_CONFIG_MONGODB_AUTH_PASSWORD}
+  #     - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+  #     - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
+  #   depends_on:
+  #     - mongo
+  #   ports:
+  #     - "8080:8081"
+  #   networks:
+  #     - PORTFOLIO-APP
 networks:
   PORTFOLIO-APP:
     name: PORTFOLIO-APP
