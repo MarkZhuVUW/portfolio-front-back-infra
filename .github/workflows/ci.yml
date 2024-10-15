@@ -28,7 +28,7 @@ jobs:
         run: |
           npm test
 
-  build-test-backend:
+  build-test-auth-service:
     runs-on: ubuntu-latest
 
     services:
@@ -46,17 +46,17 @@ jobs:
         with:
           node-version: "20.11.1" # latest LTS at the time this is written.
       - name: build & lint
-        working-directory: "./backend"
+        working-directory: "./auth-service"
         run: |
           npm ci
           npm run lint
       - name: Run unit tests
-        working-directory: "./backend"
+        working-directory: "./auth-service"
         run: |
           npm test
   # Playwright end-to-end test
   chrome-e2e-test:
-    needs: [build-test-backend, build-test-frontend]
+    needs: [build-test-auth-service, build-test-frontend]
     runs-on: ubuntu-latest
 
     steps:
@@ -72,12 +72,12 @@ jobs:
         working-directory: "./frontend"
         run: |
           rm .env
-          echo "VITE_BACKEND_API_BASE_URL=$VITE_BACKEND_API_BASE_URL" >> .env
+          echo "VITE_AUTH_SERVICE_API_BASE_URL=$VITE_AUTH_SERVICE_API_BASE_URL" >> .env
         env:
           # node creds
-          VITE_BACKEND_API_BASE_URL: http://localhost:3000
+          VITE_AUTH_SERVICE_API_BASE_URL: http://localhost:3000
       - name: Set node configs
-        working-directory: "./backend"
+        working-directory: "./auth-service"
         run: |
           rm .env
           echo "MONGO_SERVER=$MONGO_SERVER" >> .env
@@ -135,10 +135,8 @@ jobs:
         working-directory: "./e2eTests"
         run: |
           echo "REACT_APP_URL=$REACT_APP_URL" >> .env
-          echo "BACKEND_API_URL=$BACKEND_API_URL" >> .env
           npm install
           npx playwright install --with-deps chromium
           npm run test:e2e
         env:
           REACT_APP_URL: http://localhost:5000
-          BACKEND_API_URL: http://localhost:3000/api

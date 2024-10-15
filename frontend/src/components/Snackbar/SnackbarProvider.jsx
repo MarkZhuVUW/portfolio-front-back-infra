@@ -30,7 +30,7 @@ const SnackbarProvider = () => {
       return <Typography>Server error, please contact developer</Typography>;
     }
     // Handle 400 class errors by displaying error message returned from server.
-    // So for 400 class errors you need to get your backend api to return meaningful error messages.
+    // So for 400 class errors you need to get your auth-service api to return meaningful error messages.
     if (error.code?.toString().startsWith("4")) {
       if (error.code?.toString() == "401") {
         return <Typography>Please login.</Typography>;

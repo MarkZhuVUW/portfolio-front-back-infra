@@ -30,13 +30,13 @@ const AuthProvider = ({ children }) => {
 
   const getUserById = async (userId) => {
     return await get(
-      `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/users/${userId}`,
+      `${import.meta.env.VITE_AUTH_SERVICE_API_BASE_URL}/api/users/${userId}`,
     );
   };
 
   const createUser = async ({ email, userName, imageUrl, userId }) => {
     return await post(
-      `${import.meta.env.VITE_BACKEND_API_BASE_URL}/api/users`,
+      `${import.meta.env.VITE_AUTH_SERVICE_API_BASE_URL}/api/users`,
       { email, userName, imageUrl, userId },
     );
   };
