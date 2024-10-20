@@ -36,7 +36,7 @@ const SnackbarProvider = () => {
         return <Typography>Please login.</Typography>;
       }
       if (error.code?.toString() == "403") {
-        return <Typography>You are authorized.</Typography>;
+        return <Typography>You are not authorized.</Typography>;
       }
       return <Typography>{error.message}</Typography>;
     }
