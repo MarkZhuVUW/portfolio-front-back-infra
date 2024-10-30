@@ -1,8 +1,11 @@
 {
   "devDependencies": {
     "@playwright/test": "^1.43.0",
+    "@types/node": "^20.17.1",
     "dotenv": "^16.4.5",
-    "playwright": "^1.43.0"
+    "playwright": "^1.43.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   },
   "scripts": {
     "test:e2e": "playwright test"
