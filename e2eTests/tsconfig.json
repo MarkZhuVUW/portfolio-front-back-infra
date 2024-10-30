@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2015", "DOM"],  // 'DOM' is added if you're using browser APIs
+    "types": ["node"]
+  }
+}
